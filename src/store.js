@@ -4,6 +4,10 @@ export default createStore({
   state: {
     users: [
       {
+        id: 0,
+        name: 'All',
+      },
+      {
         id: 2,
         name: 'Felex',
         email: "felokemboi10@gmail.com",
@@ -43,6 +47,7 @@ export default createStore({
         category: 'Workshop'
       }
     ],
+    boughtProducts: [],
 
     loggedIn: false
   },
@@ -53,9 +58,14 @@ export default createStore({
     addUser(state, user) {
       state.users.push(user);
     },
-    addProduct(state, product) {
-      state.products.push(product);
+    addProduct(state, productToAdd) {
+      state.products.push(productToAdd);
+      state.boughtProducts = state.boughtProducts.filter((product) => product !== productToAdd)
     },
+    removeProduct(state, boughtProduct) {
+      state.boughtProducts.push(boughtProduct)
+      state.products = state.products.filter((product) => product !== boughtProduct)
+    }
   },
   getters: {
     isLoggedIn:  state => state.loggedIn,
@@ -63,6 +73,7 @@ export default createStore({
     getProducts: (state) => (id) => {
       return id.value === 0 ? state.products : state.products.filter(product => product.userId === id.value);
     },
+    getBoughtProducts: state => state.boughtProducts,
     user: (state) => (email) => {
       return state.users.find(user => user.email === email)
     }

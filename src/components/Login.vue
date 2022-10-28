@@ -19,19 +19,21 @@
   import { ref } from 'vue'
   import {computed} from 'vue';
   import {useStore} from "vuex";
+  import { useRouter } from "vue-router";
 
   const email = ref('')
   const password = ref('')
 
   const store = useStore();
+  const router =useRouter()
   const user = computed(() => store.getters.user(email.value))
 
-  const login = async function () {
-    
+  const login =  ()  => {
     if(user.value.email === email.value && user.value.password === password.value){
-       store.commit("loginUser");
+      store.commit("loginUser");
+      router.push("products")
     }else{
-        alert("Login Failed")
+      alert("Login Failed")
     }
   };
 </script>

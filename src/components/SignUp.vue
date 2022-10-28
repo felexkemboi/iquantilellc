@@ -51,7 +51,6 @@
     }
 
     store.commit("addUser", user);
-    console.log(users)
   };
 </script>
 

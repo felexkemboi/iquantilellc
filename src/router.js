@@ -25,11 +25,6 @@ const routes = [
 		name: 'products',
 		component: Products,
 	},
-	// {
-	// 	path: '/add-product',
-	// 	name: 'add-products',
-	// 	component: AddProducts,
-	// },
 	{
 		path: '/:catchAll(.*)*',
 		redirect: '/',
