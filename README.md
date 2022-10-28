@@ -27,4 +27,4 @@ This is a Product Management system to add and delete products
   ![Searching](./public/filter.png)
 
  - Add to cart, note a user can add/remove items from a cart
-  ![Searching](./public/filter.png)
+  ![Searching](./public/AddedToCart.png)
