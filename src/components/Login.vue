@@ -24,9 +24,10 @@
   const password = ref('')
 
   const store = useStore();
-  const user = computed(() => store.getters.user)
+  const user = computed(() => store.getters.user(email.value))
 
   const login = async function () {
+    
     if(user.value.email === email.value && user.value.password === password.value){
        store.commit("loginUser");
     }else{
