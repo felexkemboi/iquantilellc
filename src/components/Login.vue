@@ -17,11 +17,21 @@
 
 <script setup>
   import { ref } from 'vue'
+  import {computed} from 'vue';
+  import {useStore} from "vuex";
+
   const email = ref('')
   const password = ref('')
 
+  const store = useStore();
+  const user = computed(() => store.getters.user)
+
   const login = async function () {
-    console.log(email.value,password.value)
+    if(user.value.email === email.value && user.value.password === password.value){
+       store.commit("loginUser");
+    }else{
+        alert("Login Failed")
+    }
   };
 </script>
 
