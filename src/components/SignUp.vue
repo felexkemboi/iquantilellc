@@ -49,7 +49,6 @@
   import { ref } from 'vue'
   import {useStore} from "vuex";
   import { Field, Form, ErrorMessage } from 'vee-validate';
-  // import { extend } from 'vee-validate'
 
   const email = ref('')
   const name = ref('')
@@ -72,23 +71,23 @@
   }
 
   const validatePassword = (value) => {
-    return true
+    return new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])").test(value) && value.length >= 6 ? true : "The password must contain at least: 1 uppercase letter, 1 lowercase letter and must be atleast 6 characters"
   }
 
-  // extend('validatePassword', {
-  //   getMessage: () => "The password must contain at least: 1 uppercase letter, 1 lowercase letter and must be atleast 6 characters",
-  //   validate: value => new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})").test(value)
-  // })
-
   const signup = async function () {
-    const user = {
-      name: name.value,
-      id: id.value,
-      email: email.value,
-      password: password.value
+    if(password.value === confirm_password){
+      const user = {
+        name: name.value,
+        id: id.value,
+        email: email.value,
+        password: password.value
+      }
+
+      store.commit("addUser", user);
+    }else{
+      alert('Password and Confirm Password should be the same')
     }
 
-    store.commit("addUser", user);
   };
 </script>
 
