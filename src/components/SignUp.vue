@@ -1,22 +1,38 @@
 <template>
     <div class="home">    
     <h2>Sign Up</h2>
-    <div class="search flex-row">
-      <label>Email  :   </label>
-      <input class="input" type="text" placeholder="Enter your Email" v-model="email" />
-    </div>
-    <div class="search flex-row">
-      <label>Name  :   </label>
-      <input class="input" type="text" placeholder="Enter your Name" v-model="name" />
-    </div>
-    <div class="search flex-row">
-      <label>ID  :   </label>
-      <input class="input" type="text" placeholder="Enter your ID(Integers)" v-model="id" />
-    </div>
-    <div class="search flex-row">
-      <label>Password :</label>
-      <input class="input" type="password" placeholder="Enter your password" v-model="password" />
-    </div>
+
+    <Form class="search flex-row">
+      <div>
+        <label>Email  :   </label>
+        <Field placeholder="Enter your Email" name="email" v-model="email" :rules="validateEmail" />
+        <ErrorMessage name="email" />
+      </div>
+
+      <div>
+        <label>Name  :   </label>
+        <Field placeholder="Enter your Name" name="name"  v-model="name" />
+      </div>
+
+      <div>
+        <label>ID  :   </label>
+        <Field placeholder="Enter your ID" name="id"  v-model="id" type="number" />
+      </div>
+
+      <div>
+        <label>Password  :   </label>
+        <Field placeholder="Enter your Password" name="email" v-model="password" :rules="validatePassword" />
+        <ErrorMessage name="email" />
+      </div>
+
+      <div>
+        <label>Confirm Password  :   </label>
+        <Field placeholder="Confirm your Password" name="email" v-model="confirm_password" :rules="validatePassword" />
+        <ErrorMessage name="confirm_password" />
+      </div>
+
+    </Form>
+
     <div>
       <button type="button" @click="signup">Sign Up</button>
     </div>
@@ -31,16 +47,38 @@
 
 <script setup>
   import { ref } from 'vue'
-  import {computed} from 'vue';
   import {useStore} from "vuex";
+  import { Field, Form, ErrorMessage } from 'vee-validate';
+  // import { extend } from 'vee-validate'
 
   const email = ref('')
   const name = ref('')
   const id = ref('')
   const password = ref('')
+  const confirm_password = ref('')
 
   const store = useStore();
-  const users = computed(() => store.getters.users)
+
+  const validateEmail = (value) => {
+      if (!value) {
+        return 'This field is required';
+      }
+
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      if (!regex.test(value)) {
+        return 'This field must be a valid email';
+      }
+      return true;
+  }
+
+  const validatePassword = (value) => {
+    return true
+  }
+
+  // extend('validatePassword', {
+  //   getMessage: () => "The password must contain at least: 1 uppercase letter, 1 lowercase letter and must be atleast 6 characters",
+  //   validate: value => new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})").test(value)
+  // })
 
   const signup = async function () {
     const user = {
